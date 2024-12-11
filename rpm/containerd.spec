@@ -16,12 +16,6 @@
 #
 # nodebuginfo
 
-
-#Compat macro for new _fillupdir macro introduced in Nov 2017
-%if ! %{defined _fillupdir}
-  %define _fillupdir /var/adm/fillup-templates
-%endif
-
 # MANUAL: Update the git_version.
 %define git_version 88bf19b2105c8b17560993bee28a01ddc2f97182
 %define git_short   88bf19b2105c
@@ -53,7 +47,6 @@ Provides:       %{name}-git = %{git_version}
 # Currently runc is the only supported runtime for containerd. We pin the same
 # flavour as us, to avoid mixing (the version pinning is done by docker.spec).
 Requires:       runc
-Requires(post): %fillup_prereq
 ExcludeArch:    s390
 Provides:       cri-runtime
 
