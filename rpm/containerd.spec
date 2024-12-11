@@ -23,20 +23,20 @@
 %endif
 
 # MANUAL: Update the git_version.
-%define git_version 57f17b0a6295a39009d861b89e3b3b87b005ca27
-%define git_short   57f17b0a6295
+%define git_version 88bf19b2105c8b17560993bee28a01ddc2f97182
+%define git_short   88bf19b2105c
 
 %global provider_prefix github.com/containerd/containerd
 %global import_path %{provider_prefix}
 
 Name:           containerd
-Version:        1.7.23
-Release:        0
+Version:        1.7.24
+Release:        1
 Summary:        Standalone OCI Container Daemon
 License:        Apache-2.0
 Group:          System/Management
 URL:            https://containerd.tools
-Source:         %{name}-%{version}_%{git_short}.tar.xz
+Source0:        %{name}-%{version}.tar.xz
 Source1:        %{name}-rpmlintrc
 Source2:        %{name}.service
 # UPSTREAM: Revert <https://github.com/containerd/containerd/pull/7933> to fix build on SLE-12.
