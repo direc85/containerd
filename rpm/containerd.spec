@@ -42,12 +42,12 @@ Source2:        %{name}.service
 # UPSTREAM: Revert <https://github.com/containerd/containerd/pull/7933> to fix build on SLE-12.
 Patch1:         0001-BUILD-SLE12-revert-btrfs-depend-on-kernel-UAPI-inste.patch
 BuildRequires:  fdupes
-BuildRequires:  glibc-devel-static
+BuildRequires:  glibc-devel
 BuildRequires:  go >= 1.22
 BuildRequires:  golang-packaging
-BuildRequires:  libbtrfs-devel >= 3.8
-BuildRequires:  libseccomp-devel >= 2.2
-BuildRequires:  pkg-config
+#BuildRequires:  libbtrfs >= 3.8
+BuildRequires:  btrfs-progs-devel >= 3.8
+BuildRequires:  libseccomp >= 2.2
 # We provide a git revision so that Docker can require it properly.
 Provides:       %{name}-git = %{git_version}
 # Currently runc is the only supported runtime for containerd. We pin the same
