@@ -44,7 +44,6 @@ Patch1:         0001-BUILD-SLE12-revert-btrfs-depend-on-kernel-UAPI-inste.patch
 BuildRequires:  fdupes
 BuildRequires:  glibc-devel-static
 BuildRequires:  go >= 1.22
-BuildRequires:  go-go-md2man
 BuildRequires:  golang-packaging
 BuildRequires:  libbtrfs-devel >= 3.8
 BuildRequires:  libseccomp-devel >= 2.2
@@ -55,12 +54,6 @@ Provides:       %{name}-git = %{git_version}
 # flavour as us, to avoid mixing (the version pinning is done by docker.spec).
 Requires:       runc
 Requires(post): %fillup_prereq
-# KUBIC-SPECIFIC: There used to be a kubic-specific containerd package, but now
-#                 it's been merged into the one package. bsc#1181677
-Obsoletes:      %{name}-kubic < %{version}
-Provides:       %{name}-kubic = %{version}
-Obsoletes:      %{name} = 0.2.5+gitr569_2a5e70c
-Obsoletes:      %{name}_2a5e70c
 ExcludeArch:    s390
 Provides:       cri-runtime
 
@@ -75,11 +68,6 @@ migration of containers.
 Summary:        Client for %{name}
 Group:          System/Management
 Requires:       %{name} = %{version}
-# KUBIC-SPECIFIC: There used to be a kubic-specific containerd package, but now
-#                 it's been merged into the one package.
-Obsoletes:      %{name}-ctr = 0.2.5+gitr569_2a5e70c
-Obsoletes:      %{name}-ctr-kubic <= %{version}
-Obsoletes:      %{name}-ctr_2a5e70c
 
 %description ctr
 Standalone client for containerd, which allows management of containerd containers
@@ -90,19 +78,15 @@ Summary:        Source code for containerd
 Group:          Development/Libraries/Go
 Requires:       %{name} = %{version}
 # cannot switch to noarch on SLE as that breaks maintenance updates
-%if 0%{?suse_version} > 1500
 BuildArch:      noarch
-%endif
 
 %description devel
 This package contains the source code needed for building packages that
 reference the following Go import paths: github.com/containerd/containerd
 
 %prep
-%setup -q -n %{name}-%{version}_%{git_short}
-%if 0%{?sle_version} == 120000
+%setup -q -n %{name}-%{version}
 %patch -P 1 -p1
-%endif
 
 %build
 %goprep %{import_path}
@@ -111,8 +95,6 @@ make \
         BUILDTAGS="$BUILDTAGS" \
         VERSION="v%{version}" \
         REVISION="%{git_version}"
-
-make man
 
 cp -r "$PROJECT/bin" bin
 
@@ -135,14 +117,6 @@ echo "# See containerd-config.toml(5) for documentation." >%{buildroot}/%{_sysco
 # Install system service
 install -Dp -m644 %{SOURCE2} %{buildroot}%{_unitdir}/%{name}.service
 
-# Man pages.
-for file in man/*
-do
-        section="${file##*.}"
-        install -D -m644 "$file" "%{buildroot}/%{_mandir}/man$section/$(basename "$file")"
-done
-mv %{buildroot}/%{_mandir}/man8/{ctr.8,%{name}-ctr.8}
-
 %fdupes %{buildroot}
 
 %pre
@@ -158,7 +132,6 @@ mv %{buildroot}/%{_mandir}/man8/{ctr.8,%{name}-ctr.8}
 %service_del_postun %{name}.service
 
 %files
-%defattr(-,root,root)
 %doc README.md
 %license LICENSE
 %dir %{_sysconfdir}/%{name}
@@ -166,12 +139,9 @@ mv %{buildroot}/%{_mandir}/man8/{ctr.8,%{name}-ctr.8}
 %{_sbindir}/containerd
 %{_sbindir}/containerd-shim*
 %{_unitdir}/%{name}.service
-%{_mandir}/man*/%{name}*
-%exclude %{_mandir}/man8/*ctr.8*
 
 %files ctr
 %{_sbindir}/%{name}-ctr
-%{_mandir}/man8/%{name}-ctr.8*
 
 %files devel
 %license LICENSE
