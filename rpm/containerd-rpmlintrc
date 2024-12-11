@@ -1,0 +1,1 @@
+addFilter ("^containerd(-kubic)?.*: E: statically-linked-binary /usr/sbin/containerd-shim*")
