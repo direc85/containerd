@@ -16,6 +16,9 @@
 #
 # nodebuginfo
 
+# We need (at least) updated debuginfo scripts for these
+%global _missing_build_ids_terminate_build 0
+
 # MANUAL: Update the git_version.
 %define git_version 88bf19b2105c8b17560993bee28a01ddc2f97182
 %define git_short   88bf19b2105c
