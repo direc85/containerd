@@ -42,6 +42,7 @@ BuildRequires:  golang-packaging
 #BuildRequires:  libbtrfs >= 3.8
 BuildRequires:  btrfs-progs-devel >= 3.8
 BuildRequires:  libseccomp >= 2.2
+BuildRequires:  pkgconfig(systemd)
 # We provide a git revision so that Docker can require it properly.
 Provides:       %{name}-git = %{git_version}
 # Currently runc is the only supported runtime for containerd. We pin the same
