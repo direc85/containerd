@@ -116,17 +116,14 @@ install -Dp -m644 %{SOURCE2} %{buildroot}%{_unitdir}/%{name}.service
 
 %fdupes %{buildroot}
 
-%pre
-%service_add_pre %{name}.service
-
 %post
-%service_add_post %{name}.service
+%systemd_post %{name}.service
 
 %preun
-%service_del_preun %{name}.service
+%systemd_preun %{name}.service
 
 %postun
-%service_del_postun %{name}.service
+%systemd_postun %{name}.service
 
 %files
 %doc README.md
