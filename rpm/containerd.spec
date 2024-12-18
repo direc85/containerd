@@ -78,7 +78,7 @@ This package contains the source code needed for building packages that
 reference the following Go import paths: github.com/containerd/containerd
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q -n %{name}-%{version}/%{name}
 %patch -P 1 -p1
 
 %build
