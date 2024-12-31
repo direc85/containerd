@@ -40,7 +40,7 @@ Source2:        %{name}.service
 Patch1:         0001-BUILD-SLE12-revert-btrfs-depend-on-kernel-UAPI-inste.patch
 BuildRequires:  fdupes
 BuildRequires:  glibc-devel
-BuildRequires:  go >= 1.22
+BuildRequires:  golang(API) >= 1.23
 BuildRequires:  golang-packaging
 #BuildRequires:  libbtrfs >= 3.8
 BuildRequires:  btrfs-progs-devel >= 3.8
