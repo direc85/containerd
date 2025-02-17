@@ -20,14 +20,14 @@
 %global _missing_build_ids_terminate_build 0
 
 # MANUAL: Update the git_version.
-%define git_version 88bf19b2105c8b17560993bee28a01ddc2f97182
-%define git_short   88bf19b2105c
+%define git_version c507a0257ea6462fbd6f5ba4f5c74facb04021f4
+%define git_short   c507a0257ea6
 
 %global provider_prefix github.com/containerd/containerd
 %global import_path %{provider_prefix}
 
 Name:           containerd
-Version:        1.7.24
+Version:        2.0.2
 Release:        1
 Summary:        Standalone OCI Container Daemon
 License:        Apache-2.0
